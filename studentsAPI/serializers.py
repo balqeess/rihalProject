@@ -17,7 +17,7 @@ class CountrySerializer(serializers.ModelSerializer):
         model = Country
         fields = '__all__'
 
-class Studenterializer(serializers.ModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
