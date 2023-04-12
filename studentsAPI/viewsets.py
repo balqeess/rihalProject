@@ -15,7 +15,7 @@ class ClassViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def count_of_students_per_class(self, request):
         students_count_by_class = Student.objects.values('class_id').annotate(count=Count('id'))
-        data = [{'Class': item['class_id'], 'count': item['count']} for item in students_count_by_class]
+        data = [{'class': item['class_id'], 'count': item['count']} for item in students_count_by_class]
         return Response(data)
 
 
@@ -27,7 +27,7 @@ class CountryViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def count_of_students_per_country(self, request):
         students_count_by_country = Student.objects.values('country_id').annotate(count=Count('id'))
-        data = [{'Country': item['country_id'], 'count': item['count']} for item in students_count_by_country]
+        data = [{'country': item['country_id'], 'count': item['count']} for item in students_count_by_country]
         return Response(data)
 
 class StudentViewSet(viewsets.ModelViewSet):
