@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .viewsets import ClassViewSet, CountryViewSet, StudentViewSet
 from .models import Student
-
+from .forms import StudentForm
 
 # Create your views here.
   # thru this function we return the desired display after post after redirection 
@@ -19,7 +19,16 @@ def students_statistics(request):
     return render(request,"studentsAPI/students_statistics.html")
 
 def students_form(request):
-    return render(request,"studentsAPI/students_form.html")
+    if request.method == "GET": #GET REQUEST
+        form = StudentForm()
+        return render(request,"studentsAPI/students_form.html", {'form':form})
+    else: # if it is an update operation
+            form = StudentForm(request.POST)
+            if form.is_valid():
+                 form.save()
+            return redirect('/student/statistics')
+        
+    
 
 def students_delete(request):
     return

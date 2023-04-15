@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'studentsAPI',
     'rest_framework',
+    'crispy_forms',
+    'crispy_bootstrap4'
+       
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -103,6 +108,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+
+
+DATE_INPUT_FORMATS = [
+    '%d/%m/%Y',
+    '%d-%m-%Y',
+    '%d/%m/%y',
+    '%d-%m-%y',
 ]
 
 

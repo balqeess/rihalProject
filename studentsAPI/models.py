@@ -28,7 +28,6 @@ class Country(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=50)
     date_of_birth = models.DateField(null=True)
-    mobile = models.IntegerField(null=True)
     createdDate = models.DateTimeField(auto_now_add=True, null=True)
     modifiedDate = models.DateTimeField(auto_now=True, null=True)
     
