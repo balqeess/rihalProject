@@ -4,6 +4,7 @@ from .models import Class, Country, Student
 from django.db.models import Count, Avg
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from datetime import date
 
 ''' a ViewSet is a class-based view that provides CRUD (Create, Retrieve, Update, Delete) functionality for a model or a queryset. 
 '''
@@ -36,5 +37,13 @@ class StudentViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def avg_age_of_students(self, request):
-        avg_age = Student.objects.aggregate(avg_age=Avg('age'))
+        students = Student.objects.all()
+        total_age = 0
+        if students:
+            for student in students:
+                age = (date.today() - student.date_of_birth).days / 365 # converting days to years
+                total_age += age
+            avg_age = total_age / len(students) 
+        else:
+            avg_age = 0
         return Response(avg_age)

@@ -16,10 +16,10 @@ def students_statistics(request):
         'avg_age': avg_age,
         'students_statistics': Student.objects.all()
     }
-    return 
+    return render(request,"studentsAPI/students_statistics.html")
 
 def students_form(request):
-    return
+    return render(request,"studentsAPI/students_form.html")
 
 def students_delete(request):
     return
