@@ -14,9 +14,9 @@ def students_statistics(request):
         'students_count_by_class': students_count_by_class,
         'students_count_by_country': students_count_by_country,
         'avg_age': avg_age,
-        'students_statistics': Student.objects.all()
+        'students_list': Student.objects.all()
     }
-    return render(request,"studentsAPI/students_statistics.html")
+    return render(request,"studentsAPI/students_statistics.html",context)
 
 def students_form(request):
     if request.method == "GET": #GET REQUEST
