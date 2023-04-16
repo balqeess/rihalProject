@@ -52,8 +52,7 @@ def students_delete(request,id):
 
 
 
-def home(request):
-    return render(request, 'home.html')
+
 
 
     
