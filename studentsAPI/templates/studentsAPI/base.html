@@ -6,20 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Student Register</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body> 
+    <i class="bi bi-brightness-high-fill bi-10x" id="toggleDark"></i> Dark/light mode 
     <div class="container">
         <div class="col-md-13 offset-md-1 mt-5">
             <div class="hero bg-secondary">
                 <h1 class="mb-4" >Student Register </h1>
                 <p class="font-weight-bold">rihalFSWD django project for implementing CRUD operations</p>
                 <hr class="my-4">
-    {% block content %}
-    {% endblock content %}
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -29,5 +35,27 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    
+        <script>
+            const toggle = document.getElementById('toggleDark');
+            const body = document.querySelector('body');
+            
+            toggle.addEventListener('click', function(){
+                this.classList.toggle('bi-moon');
+                if(this.classList.toggle('bi-brightness-high-fill')){
+                    body.style.background = 'white';
+                    body.style.color = 'black';
+                    body.style.transition = '2s';
+                    
+                }else{
+                    body.style.background = 'black';
+                    body.style.color = 'white';
+                    body.style.transition = '2s';
+                   
+                    
+                }
+            });
+        </script>
 </body>
 </html>

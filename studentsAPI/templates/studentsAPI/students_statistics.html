@@ -3,7 +3,7 @@
 {% block content %}
 <body>
 <h2>Statistics</h2>
-    <p>Average age of students: {{ avg_age.avg_age }}</p>
+    <p>Average age of students: {{ avg_age }}</p>
     <p>Students count by class:</p>
     <ul>
         {% for item in students_count_by_class %}
@@ -26,10 +26,15 @@
                 <th>date of birth</th>
                 <th>class_id</th>
                 <th>country_id</th>
+                <th>
+                  <a href="{% url 'students_insert' %}" class="btn btn-outline-success">
+                  <i class="fa fa-user" aria-hidden="true"></i> Add New Student
+                  </a>
+          </th>
         </tr>
     </thead>
     <tbody>
-              {% for student in students_list %}
+              {% for student in students_statistics %}
               <tr>
                 <td>{{ student.name }}</td>
                 <td>{{ student.date_of_birth }}</td>
@@ -38,9 +43,9 @@
                 <td>
                   <a href="{% url 'students_update' id=student.id %}" class="btn btn-sm btn-outline-primary">
                     <i class="fas fa-edit"></i> Edit
-                  <a href="{% url 'students_delete' id=student.id %}" class="btn btn-sm btn-outline-danger">
-                      <i class="fas fa-trash"></i> Delete
                   </a>
+                  <a href="{% url 'students_delete' id=student.id %}" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-trash"></i> Delete
                   </a>
                 </td>
                 

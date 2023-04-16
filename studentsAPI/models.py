@@ -30,7 +30,6 @@ class Student(models.Model):
     date_of_birth = models.DateField(null=True)
     createdDate = models.DateTimeField(auto_now_add=True, null=True)
     modifiedDate = models.DateTimeField(auto_now=True, null=True)
-    
     class_id = models.ForeignKey(Class, null=True, on_delete=models.SET_NULL)
     country_id = models.ForeignKey(Country, null=True,  on_delete=models.SET_NULL)
 

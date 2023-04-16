@@ -9,29 +9,38 @@ def students_statistics(request):
     # Get the data from the viewset actions
     students_count_by_class = ClassViewSet.as_view({'get': 'count_of_students_per_class'})(request).data
     students_count_by_country = CountryViewSet.as_view({'get': 'count_of_students_per_country'})(request).data
-    avg_age = StudentViewSet.as_view({'get': 'avg_age_of_students'})(request).data
+    avg_age = int(StudentViewSet.as_view({'get': 'avg_age_of_students'})(request).data)
     context = {
         'students_count_by_class': students_count_by_class,
         'students_count_by_country': students_count_by_country,
         'avg_age': avg_age,
-        'students_list': Student.objects.all()
+        'students_statistics': Student.objects.all()
     }
     return render(request,"studentsAPI/students_statistics.html",context)
 
-def students_form(request, id=0):# if insert operation we have not provided id the id will be zero
+def students_form(request):# if insert operation we have not provided id the id will be zero
+    if request.method == "GET":
+        form = StudentForm()
+        return render(request,"studentsAPI/students_form.html", {'form':form})
+    else:
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/student/statistics')
+#def students_form(request, id=0):# if insert operation we have not provided id the id will be zero
     if request.method == "GET": #GET REQUEST
         if id==0: # we will have insert operation
             form = StudentForm()
         else: # if it is an update operation
-            employee = Student.objects.get(pk=id)
-            form = StudentForm(instance=employee)
+            student = Student.objects.get(pk=id)
+            form = StudentForm(instance=student)
         return render(request, "studentsAPI/students_form.html", {'form': form})
     else:# POST OPERATION WILL BE HANDLED HERE 
         if id == 0: #INSERT
             form = StudentForm(request.POST)
         else: #UPADTE
-            employee = Student.objects.get(pk=id)
-            form = StudentForm(request.POST, instance = employee) #the first paraemter passes the info from the form
+            student = Student.objects.get(pk=id)
+            form = StudentForm(request.POST, instance = student) #the first paraemter passes the info from the form
             # the 2nd parameter we have the employee object which has the data from the DB which is to be updated with 
             #the first parameter
         
@@ -46,7 +55,7 @@ def students_form(request, id=0):# if insert operation we have not provided id t
 
 def students_delete(request,id):
     student = Student.objects.get(pk=id)
-    Student.delete()
+    student.delete()
     return redirect('/student/statistics')
 
     
