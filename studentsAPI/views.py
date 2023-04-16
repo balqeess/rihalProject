@@ -50,4 +50,10 @@ def students_delete(request,id):
     student.delete()
     return redirect('/student/statistics')
 
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
     
