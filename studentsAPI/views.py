@@ -18,16 +18,8 @@ def students_statistics(request):
     }
     return render(request,"studentsAPI/students_statistics.html",context)
 
-def students_form(request):# if insert operation we have not provided id the id will be zero
-    if request.method == "GET":
-        form = StudentForm()
-        return render(request,"studentsAPI/students_form.html", {'form':form})
-    else:
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('/student/statistics')
-#def students_form(request, id=0):# if insert operation we have not provided id the id will be zero
+
+def students_form(request, id=0):# if insert operation we have not provided id the id will be zero
     if request.method == "GET": #GET REQUEST
         if id==0: # we will have insert operation
             form = StudentForm()
