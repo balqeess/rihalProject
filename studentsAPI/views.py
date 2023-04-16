@@ -18,17 +18,35 @@ def students_statistics(request):
     }
     return render(request,"studentsAPI/students_statistics.html",context)
 
-def students_form(request):
+def students_form(request, id=0):# if insert operation we have not provided id the id will be zero
     if request.method == "GET": #GET REQUEST
-        form = StudentForm()
-        return render(request,"studentsAPI/students_form.html", {'form':form})
-    else: # if it is an update operation
+        if id==0: # we will have insert operation
+            form = StudentForm()
+        else: # if it is an update operation
+            employee = Student.objects.get(pk=id)
+            form = StudentForm(instance=employee)
+        return render(request, "studentsAPI/students_form.html", {'form': form})
+    else:# POST OPERATION WILL BE HANDLED HERE 
+        if id == 0: #INSERT
             form = StudentForm(request.POST)
-            if form.is_valid():
-                 form.save()
-            return redirect('/student/statistics')
+        else: #UPADTE
+            employee = Student.objects.get(pk=id)
+            form = StudentForm(request.POST, instance = employee) #the first paraemter passes the info from the form
+            # the 2nd parameter we have the employee object which has the data from the DB which is to be updated with 
+            #the first parameter
         
+        if form.is_valid():# this is for both insert and update operations
+            form.save()
+            #after the save operation we will redirect the user into the route for showing the record 
+            # all inserted users so far
+        return redirect('/student/statistics')
+        
+
     
 
-def students_delete(request):
-    return
+def students_delete(request,id):
+    student = Student.objects.get(pk=id)
+    Student.delete()
+    return redirect('/student/statistics')
+
+    

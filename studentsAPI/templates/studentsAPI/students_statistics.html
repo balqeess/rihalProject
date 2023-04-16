@@ -23,7 +23,7 @@
             <thead class="bg-primary text-white">
               <tr>
                 <th>Name</th>
-                <th>data of birth</th>
+                <th>date of birth</th>
                 <th>class_id</th>
                 <th>country_id</th>
         </tr>
@@ -35,8 +35,15 @@
                 <td>{{ student.date_of_birth }}</td>
                 <td>{{ student.class_id }}</td>
                 <td>{{ student.country_id }}</td>
-  
-        
+                <td>
+                  <a href="{% url 'students_update' id=student.id %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-edit"></i> Edit
+                  <a href="{% url 'students_delete' id=student.id %}" class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-trash"></i> Delete
+                  </a>
+                  </a>
+                </td>
+                
               </tr>
               {% empty %}
               <tr>
