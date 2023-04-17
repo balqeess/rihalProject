@@ -40,7 +40,7 @@ def students_form(request, id=0):# if insert operation we have not provided id t
             form.save()
             #after the save operation we will redirect the user into the route for showing the record 
             # all inserted users so far
-        return redirect('/student/statistics')
+        return redirect('students_statistics')
         
 
     
