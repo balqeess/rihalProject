@@ -48,7 +48,7 @@ def students_form(request, id=0):# if insert operation we have not provided id t
 def students_delete(request,id):
     student = Student.objects.get(pk=id)
     student.delete()
-    return redirect('/student/statistics')
+    return redirect('students_statistics')
 
 
 

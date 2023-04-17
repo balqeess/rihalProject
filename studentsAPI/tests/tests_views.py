@@ -85,3 +85,10 @@ class StudentsStatisticsViewTestCase(TestCase):
         self.assertEqual(str(updated_student.date_of_birth), '2000-01-01')
         self.assertEqual(updated_student.class_id.class_name, 'class b')
         self.assertEqual(updated_student.country_id.name, 'oman')
+
+    def test_students_delete(self):
+    # Get the student to delete
+        student_to_delete = Student.objects.get(name='balqees')
+        response = self.client.post(reverse('students_delete', args=[student_to_delete.id]))
+        self.assertRedirects(response, reverse('students_statistics'))
+        self.assertEqual(Student.objects.count(), 1)

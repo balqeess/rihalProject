@@ -17,7 +17,6 @@ class ClassViewSet(viewsets.ModelViewSet):
     def count_of_students_per_class(self, request):
         students_count_by_class = Student.objects.values('class_id__class_name').annotate(count=Count('id'))
         data = [{'class': item['class_id__class_name'], 'count': item['count']} for item in students_count_by_class]
-        print(data)
         return Response(data)
 
 
