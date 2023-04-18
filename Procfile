@@ -1,0 +1,1 @@
+web: gunicorn rihal_FSWD.wsgi --log-file -
