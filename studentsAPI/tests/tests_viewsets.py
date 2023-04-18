@@ -1,51 +1,50 @@
-'''from django.test import TestCase
-from django.urls import reverse
-from rest_framework.test import APIClient
+from django.test import TestCase, RequestFactory
 from rest_framework import status
-from studentsAPI.models import Student,Class,Country
-import json 
+from rest_framework.test import force_authenticate, APIRequestFactory
+from studentsAPI.models import Class, Country, Student
+from studentsAPI.serializers import ClassSerializer, CountrySerializer, StudentSerializer
+from studentsAPI.views import ClassViewSet, CountryViewSet, StudentViewSet
+
+class TestClassViewSet(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.view = ClassViewSet.as_view({'get': 'count_of_students_per_class'})
+        self.class1 = Class.objects.create(class_name='a')
+        self.student1 = Student.objects.create(name='balqees', date_of_birth='2000-01-01', class_id=self.class1)
+        self.student2 = Student.objects.create(name='khadija', date_of_birth='1999-05-01', class_id=self.class1)
+
+    def test_count_of_students_per_class(self):
+        request = self.factory.get('')
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, [{'class': 'a', 'count': 2}])
 
 class TestCountryViewSet(TestCase):
     def setUp(self):
-        self.client = APIClient()
-        # create test data for the Country and Student models here
-        Country.objects.create(name='Oman')
-        Country.objects.create(name='United Arab Emirates')
-        Class.objects.create(class_name='Class A')
-        Class.objects.create(class_name='Class B')
-        Student.objects.create(name='Jane', date_of_birth='1997-09-23', class_id=Class.objects.get(class_name='Class B'), country_id=Country.objects.get(name='Oman'))
-        Student.objects.create(name='Ali', date_of_birth='2000-01-01', class_id=Class.objects.get(class_name='Class A'), country_id=Country.objects.get(name='Oman'))
-        Student.objects.create(name='Ahmed', date_of_birth='2000-01-01', class_id=Class.objects.get(class_name='Class A'), country_id=Country.objects.get(name='United Arab Emirates'))
+        self.factory = RequestFactory()
+        self.view = CountryViewSet.as_view({'get': 'count_of_students_per_country'})
+        self.country1 = Country.objects.create(name='KWT')
+        self.student1 = Student.objects.create(name='balqees', date_of_birth='2000-01-01', country_id=self.country1)
+        self.student2 = Student.objects.create(name='khadija', date_of_birth='1999-05-01', country_id=self.country1)
 
-    def test_count_of_students_per_class_action(self):
-        response = self.client.get(reverse('students_statistics'))
+    def test_count_of_students_per_country(self):
+        request = self.factory.get('')
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, [{'country': 'KWT', 'count': 2}])
 
-        # check that the response status code is 200
-        self.assertEqual(response.status_code, 200)
+class TestStudentViewSet(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.view = StudentViewSet.as_view({'get': 'avg_age_of_students'})
+        self.class1 = Class.objects.create(class_name='a')
+        self.country1 = Country.objects.create(name='KWT')
+        self.student1 = Student.objects.create(name='balqees', date_of_birth='2000-01-01', class_id=self.class1, country_id=self.country1)
+        self.student2 = Student.objects.create(name='khadija', date_of_birth='1999-05-01', class_id=self.class1, country_id=self.country1)
 
-        # check that the expected data is in the response data
-        expected_data = [
-            {'class': 'Class A', 'count': 2},
-            {'class': 'Class B', 'count': 1}
-        ]
-        self.assertEqual(response.data, expected_data)
+    def test_avg_age_of_students(self):
+        request = self.factory.get('')
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, 23)  # expected average age of students
 
-    def test_count_of_students_per_country_action(self):
-        response = self.client.get(reverse('students_statistics'))
-
-        # check that the response status code is 200
-        self.assertEqual(response.status_code, 200)
-
-        # check that the expected data is in the response data
-        expected_data = [{'country': 'Oman', 'count': 2}, {'country': 'United Arab Emirates', 'count': 1}]
-        self.assertEqual(response.data, expected_data)
-
-    def test_avg_age_of_students_action(self):
-        response = self.client.get(reverse('students_statistics'))
-
-        # check that the response status code is 200
-        self.assertEqual(response.status_code, 200)
-
-        # check that the expected data is in the response data
-        expected_data = 22  # replace with the expected average age based on your test data
-        self.assertEqual(response.data, expected_data)'''

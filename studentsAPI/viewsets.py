@@ -41,9 +41,9 @@ class StudentViewSet(viewsets.ModelViewSet):
         total_age = 0
         if students:
             for student in students:
-                age = (date.today() - student.date_of_birth).days / 365 # converting days to years
+                age = (date.today() - student.date_of_birth).days / 365.25 # converting days to years
                 total_age += age
-            avg_age = total_age / len(students) 
+            avg_age = total_age / len(students)
         else:
             avg_age = 0
-        return Response(avg_age)
+        return Response(int(avg_age))

@@ -9,7 +9,8 @@ def students_statistics(request):
     # Get the data from the viewset actions
     students_count_by_class = ClassViewSet.as_view({'get': 'count_of_students_per_class'})(request).data
     students_count_by_country = CountryViewSet.as_view({'get': 'count_of_students_per_country'})(request).data
-    avg_age = int(StudentViewSet.as_view({'get': 'avg_age_of_students'})(request).data)
+    avg_age = StudentViewSet.as_view({'get': 'avg_age_of_students'})(request).data
+
     context = {
         'students_count_by_class': students_count_by_class,
         'students_count_by_country': students_count_by_country,
