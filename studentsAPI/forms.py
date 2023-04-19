@@ -8,7 +8,7 @@ class StudentForm(forms.ModelForm):
 
         # to specify custom labels for the form fields.
         labels ={
-            'date_of_birth': 'date of birth',
+            'date_of_birth': 'date of birth (yr-mm-dd)',
             'class_id': 'class',
             'country_id': 'country'
         }
