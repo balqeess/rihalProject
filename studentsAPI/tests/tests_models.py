@@ -2,6 +2,8 @@ from django.test import TestCase
 from datetime import date
 from studentsAPI.models import Class, Country, Student
 
+# Setting up the environment for the tests by creating instances of Class, Country, and Student
+
 class TestModels(TestCase):
 
     def setUp(self):

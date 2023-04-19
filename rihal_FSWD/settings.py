@@ -64,10 +64,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'rihal_FSWD.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'studentsAPI', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

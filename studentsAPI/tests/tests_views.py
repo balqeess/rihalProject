@@ -17,6 +17,7 @@ class StudentsStatisticsViewTestCase(TestCase):
 
     def test_students_statistics_view(self):
         response = self.client.get(reverse('students_statistics'))
+        # check if the response code is 200 (OK) and also verifies if the expected data
         self.assertEquals(response.status_code, 200)
         # check that the expected keys are in the response context
         self.assertIn('students_count_by_class', response.context)
@@ -38,6 +39,7 @@ class StudentsStatisticsViewTestCase(TestCase):
 
     def test_get_students_form(self):
         response = self.client.get(reverse('students_insert'))
+        #checks if the response code is 200 (OK) and also verifies if the expected data
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['form'], StudentForm)
         self.assertTemplateUsed(response, 'studentsAPI/students_form.html')
@@ -58,7 +60,9 @@ class StudentsStatisticsViewTestCase(TestCase):
             'class_id': Class.objects.get(class_name='class b').id,
             'country_id': Country.objects.get(name='oman').id,
         }
+        # sends a POST request to the students_insert URL with the required form data
         response = self.client.post(reverse('students_insert'), data=form_data)
+        # checks if the response is a redirect to students_statistics URL with a status code of 302 (Redirect).
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('students_statistics'))
         self.assertEqual(Student.objects.count(), 3)
@@ -77,7 +81,9 @@ class StudentsStatisticsViewTestCase(TestCase):
             'class_id': Class.objects.get(class_name='class b').id,
             'country_id': Country.objects.get(name='oman').id,
         }
+        # It sends a POST request to the students_update URL with the required form data and the student id 
         response = self.client.post(reverse('students_update', args=[student.id]), data=form_data)
+        # checks if the response is a redirect to students_statistics URL with a status code of 302 (Redirect).
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('students_statistics'))
         updated_student = Student.objects.get(pk=student.id)
@@ -88,7 +94,9 @@ class StudentsStatisticsViewTestCase(TestCase):
 
     def test_students_delete(self):
     # Get the student to delete
+        # gets a student object with a name of balqees and sends a POST request to the students_delete URL with the ID 
         student_to_delete = Student.objects.get(name='balqees')
         response = self.client.post(reverse('students_delete', args=[student_to_delete.id]))
+        # checks if the response is a redirect to students_statistics URL,
         self.assertRedirects(response, reverse('students_statistics'))
         self.assertEqual(Student.objects.count(), 1)

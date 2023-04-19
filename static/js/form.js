@@ -1,4 +1,3 @@
-// static/js/form.js
 
 // Add event listener to submit button to show loading spinner
 document.querySelector('form button[type="submit"]').addEventListener('click', function() {

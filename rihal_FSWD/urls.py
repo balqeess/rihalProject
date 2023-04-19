@@ -16,13 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
-
+from studentsAPI.views import students_form
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='students_form.html'), name='students_insert'),
+    path('', students_form),
     path('student/', include('studentsAPI.urls'))
 
 ]

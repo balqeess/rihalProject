@@ -4,6 +4,8 @@ from studentsAPI.forms import StudentForm
 
 
 class StudentFormTestCase(TestCase):
+    # Set up some initial data for our tests
+    # Create two classes and two countries
     def setUp(self):
         self.class_a = Class.objects.create(class_name='Class A')
         self.class_b = Class.objects.create(class_name='Class B')
