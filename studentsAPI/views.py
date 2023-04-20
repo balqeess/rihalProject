@@ -18,11 +18,14 @@ def students_statistics(request):
         'students_count_by_class': students_count_by_class,
         'students_count_by_country': students_count_by_country,
         'avg_age': avg_age,
-        'students_statistics': Student.objects.all()
     }
 
     # it renders the studentsAPI/students_statistics.html template using the render() function and returns the rendered template as an HTTP response.
     return render(request,"studentsAPI/students_statistics.html",context)
+
+def students_list(request):
+    context = {'students_list': Student.objects.all()}
+    return render(request, "studentsAPI/students_list.html",context)
 
 
 def students_form(request, id=0):# if insert operation we have not provided id the id will be zero

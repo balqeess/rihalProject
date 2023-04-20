@@ -9,11 +9,17 @@
             
                     <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
                         Submit</button>
+                           
                 
                 <div class="col-md-4">
                     <a href="{% url 'students_statistics' %}" class="btn btn-secondary btn-block btn">
-                        <i class="fas fa-stream"></i> Back to Statistics
+                        <i class="fas fa-stream"></i>  Statistics
                     </a>
+
+                    <a href="{% url 'students_list' %}" class="btn btn-secondary btn-block btn">
+                        <i class="fas fa-stream"></i>  List
+                    </a>     
+
                 </div>
             
     </form>
