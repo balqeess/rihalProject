@@ -69,7 +69,7 @@ def students_form(request, id=0):# if insert operation we have not provided id t
 
             #after the save operation we will redirect the user into the route for showing the records of
             # all inserted users so far
-        return redirect('students_statistics')
+        return redirect('students_list')
         
 
     
@@ -82,7 +82,7 @@ def students_delete(request,id):
 
     # redirects the user to the students_statistics route, 
     # which will display a list of all the remaining students after the deletion.
-    return redirect('students_statistics')
+    return redirect('students_list')
 
 
 
