@@ -13,7 +13,7 @@ Run database migrations using python manage.py migrate
 Usag
 To start the development server, run python manage.py runserver. This will start the server on http://localhost:8000/.
 
-To create a new student, navigate to http://localhost:8000/students/ and fill out the registration form.
+To create a new student, navigate to http://localhost:8000/student/ and fill out the registration form.
 
 To edit or delete a student, navigate to http://localhost:8000/student/list/.
 
