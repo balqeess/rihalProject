@@ -24,7 +24,10 @@ def students_statistics(request):
     return render(request,"studentsAPI/students_statistics.html",context)
 
 def students_list(request):
+    #retrieve a list of all Student objects from the database
+    #store it in a dictionary
     context = {'students_list': Student.objects.all()}
+    #it renders the studentsAPI/students_list.html template using the render() function and returns the rendered template as an HTTP response.
     return render(request, "studentsAPI/students_list.html",context)
 
 
