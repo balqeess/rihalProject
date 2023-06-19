@@ -123,9 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 DATE_INPUT_FORMATS = [
-    '%d/%m/%Y',
-    '%d-%m-%Y',
-    '%d/%m/%y',
     '%d-%m-%y',
     '%y-%m-%d'
 ]
