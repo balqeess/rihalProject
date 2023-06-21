@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-enrc-jv5s&aq0*^wpel&-m69qznx%b7v^j+arz-k*mgk%ct&j2'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['studentsapp-0188.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = [ '127.0.0.1']
 
 
 # Application definition
@@ -94,7 +94,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD' : '8aLJab',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5432',
         
     }
 }
@@ -154,5 +154,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # new
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#activate django-heroku
-django_heroku.settings(locals())
+
