@@ -1,0 +1,44 @@
+# we are building or defining services that we want to run in our container 
+version: '3.11'
+services:
+  app:
+  # we can utilize this build tool to configure other options 
+  # that are applied at build time
+  # we will specify . which refers to the folder its in 
+  #  we essentialy means the dockerfile exists  and we can utilize that 
+  #  to support the build 
+    build: .
+    # a volume in this context is describing a folder that resides on 
+    # our operating system within the container 
+    volumes:
+    # django is a folder that is in the container
+    # we are building a link between the containers folder and the /django folder (our app)
+      - .:/django
+    ports:
+      - 8000:8000
+    image: app:django
+    container_name: django_container
+    environment:
+          - DATABASE_URL=postgres://postgres:8aLJab@db:5432/rihalDB
+    # the zeros are to represent all the ip addresses from this service 
+    # and expose all of them over to port 8000
+    command: >
+      sh -c "python3 manage.py collectstatic --noinput &&
+             python3 manage.py migrate &&
+             python3 manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+      
+
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+       POSTGRES_DB: rihalDB
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: 8aLJab
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+
