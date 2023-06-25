@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
+from dotenv import load_dotenv
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-enrc-jv5s&aq0*^wpel&-m69qznx%b7v^j+arz-k*mgk%ct&j2'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
+
 
 ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0']
 
@@ -87,20 +91,28 @@ WSGI_APPLICATION = 'rihal_FSWD.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rihalDB',
-        'USER': 'postgres',
-        'PASSWORD' : '8aLJab',
-        'HOST': 'db',
-        'PORT': '5432'
-        
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
     }
 }
+
+load_dotenv()  # Load environment variables from .env file
 import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
+
+# Get the database URL from the environment variable
+database_url = os.getenv('DATABASE_URL')
+
+# Configure the default database
+db_from_env = dj_database_url.config(default=database_url, conn_max_age=600)
 DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

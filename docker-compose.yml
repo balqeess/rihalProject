@@ -1,5 +1,5 @@
 # we are building or defining services that we want to run in our container 
-version: '3.11'
+version: '3'
 services:
   app:
   # we can utilize this build tool to configure other options 
@@ -13,25 +13,24 @@ services:
     volumes:
     # django is a folder that is in the container
     # we are building a link between the containers folder and the /django folder (our app)
-      - .:/django
+      - ./rihalProject:/django
     ports:
       - 8000:8000
     image: app:django
     container_name: django_container
     environment:
-          - DATABASE_URL=postgres://postgres:8aLJab@db:5432/rihalDB
+      - SECRET_KEY=${SECRET_KEY}  # Use the SECRET_KEY from .env file
+      - DEBUG=${DEBUG}            # Use the DEBUG flag from .env file
+      - DATABASE_URL=${DATABASE_URL}  # Use the DATABASE_URL from .env file
+
     # the zeros are to represent all the ip addresses from this service 
     # and expose all of them over to port 8000
-    command: >
-      sh -c "python3 manage.py collectstatic --noinput &&
-             python3 manage.py migrate &&
-             python3 manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db
       
 
   db:
-    image: postgres
+    image: postgres:15
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
@@ -41,4 +40,7 @@ services:
     container_name: postgres_db
     ports:
       - "5432:5432"
+    hostname: db
 
+volumes:
+  pgdata: {}
